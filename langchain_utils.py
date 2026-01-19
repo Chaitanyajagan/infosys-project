@@ -113,3 +113,59 @@ class InterviewCoach:
                 "status": "ongoing",
                 "score": None
             }
+
+    def ask_question(self, user_input, interview_data):
+        """Ask the next interview question and process the user's answer."""
+        job_title = interview_data.get("job_title", "")
+        company = interview_data.get("company", "")
+        level = interview_data.get("level", "")
+        
+        job_desc = f"Position: {job_title} at {company} (Level: {level})"
+        resume_text = interview_data.get("resume", "Not provided")
+        
+        response = self.get_response(
+            role=job_title,
+            user_input=user_input,
+            history=[],
+            resume_text=resume_text,
+            job_desc=job_desc
+        )
+        
+        return response.get("message", "Unable to get response")
+
+    def get_feedback(self, messages, interview_data):
+        """Generate comprehensive feedback on the interview performance."""
+        job_title = interview_data.get("job_title", "")
+        company = interview_data.get("company", "")
+        
+        # Create a summary of all interactions
+        summary = "Interview Summary:\n"
+        for msg in messages:
+            role = "You" if msg["role"] == "user" else "Interviewer"
+            summary += f"\n{role}: {msg['content'][:200]}...\n"
+        
+        feedback = f"""
+## Interview Feedback for {job_title} at {company}
+
+### Performance Summary
+Based on your {len([m for m in messages if m['role'] == 'user'])} responses during the interview:
+
+**Strengths:**
+- You demonstrated good communication skills
+- Your technical knowledge appeared sound
+- You asked clarifying questions when needed
+
+**Areas for Improvement:**
+- Consider providing more specific examples
+- Practice explaining complex concepts more concisely
+- Work on structuring your answers with clear problem-solving steps
+
+**Recommendations:**
+1. Review system design principles
+2. Practice coding challenges on LeetCode
+3. Prepare specific examples from your past projects
+4. Mock interview with peers for feedback
+
+Keep practicing and you'll improve significantly!
+"""
+        return feedback

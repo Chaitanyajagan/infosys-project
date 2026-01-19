@@ -6,3 +6,4 @@ pyttsx3
 SpeechRecognition
 pypdf
 streamlit-mic-recorder
+flask
