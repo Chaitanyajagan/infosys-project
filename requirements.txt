@@ -1,6 +1,7 @@
 streamlit
 python-dotenv
-langchain-google-genai
+langchain-openai
+openai
 langchain-core
 pyttsx3
 SpeechRecognition
