@@ -1,7 +1,7 @@
 import os
 import time
 import json
-from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_openai import ChatOpenAI
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 
@@ -13,9 +13,9 @@ class InterviewCoach:
     def configure(self, api_key):
         self.api_key = api_key
         # Initialize LangChain model
-        llm = ChatGoogleGenerativeAI(
-            model="gemini-2.5-flash",
-            google_api_key=self.api_key,
+        llm = ChatOpenAI(
+            model="gpt-4o-mini",
+            api_key=self.api_key,
             temperature=0.7
         )
         
